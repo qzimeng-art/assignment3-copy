@@ -537,7 +537,7 @@ class CommandInterface:
                             if key not in line_sum:
                                 line_sum[key] = {}
                             key_sum = line_sum[key]
-                            key_match = (pattern_forward, type)
+                            key_match = (pattern, type)
                             prev = key_sum.get(key_match)
                             # If line length > 1, sum up the same patterns
                             if len(coords) > 1:
