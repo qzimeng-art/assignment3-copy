@@ -503,7 +503,6 @@ class CommandInterface:
             # Citation: https://stackoverflow.com/questions/931092/how-do-i-reverse-a-string-in-python
             # Reverse the string of pattern 
             pattern_back = pattern[::-1]
-            common_pattern = min(pattern_forward, pattern_back)
 
             # Avoid double counting if pattern_forward matches pattern_backward
             pattern_same = []
@@ -538,7 +537,7 @@ class CommandInterface:
                             if key not in line_sum:
                                 line_sum[key] = {}
                             key_sum = line_sum[key]
-                            key_match = (common_pattern, type)
+                            key_match = (pattern_forward, type)
                             prev = key_sum.get(key_match)
                             # If line length > 1, sum up the same patterns
                             if len(coords) > 1:
@@ -555,10 +554,10 @@ class CommandInterface:
         max_set = {}
         for key, pattern_value_pair in line_sum.items():
             pattern_max_value = {}
-            for (common_pattern, type), weight in pattern_value_pair.items():
-                prev = pattern_max_value.get((common_pattern, type))
+            for (pattern, type), weight in pattern_value_pair.items():
+                prev = pattern_max_value.get((pattern, type))
                 if prev is None or weight > prev:
-                    pattern_max_value[(common_pattern, type)] = weight
+                    pattern_max_value[(pattern, type)] = weight
             max_set[key] = max(pattern_max_value.values())
         items = [(key, weight) for key, weight in max_set.items()]
         # We gradually remove the overlapped and smaller subsets from large to small order
